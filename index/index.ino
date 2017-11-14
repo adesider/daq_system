@@ -11,7 +11,7 @@
  * * Accelerometer:         SDA
  * * Linear Potentiometers: A0 - A3
  * * Hall Effect:           D38 - D41
- * * Steering Angle:        D42
+ * * Steering Angle:        A4
  * * Brake Pedal:           D43
  * * Tire Temperature:      D22 - D25
  * 
@@ -22,7 +22,7 @@
  * * Victor Fraga
  * * Xavier Sifuentes
  * * Joseph Young
- * * Alexjandro Desiderio
+ * * Alejandro Desiderio
  * * Eunsol Ko
  */
 
@@ -35,7 +35,7 @@
 /*
  * this array holds the pin number for all components
  */
-int allPins[] = [0, 1, 2, 3, 38, 39, 40, 41, 42,43, 22, 23, 24, 25];
+int allPins[] = [0, 1, 2, 3, 38, 39, 40, 41, 8,43, 22, 23, 24, 25];
 
 /*
  * you can declare any global variable you might need below
@@ -89,7 +89,26 @@ void linear_potentiometer(){
 
 void steering_angle(){
   // pin: allPins[8]
+
+  int sensorValue = analogRead(A4); //read the input on analog pin 0
+  // Convert the analog reeading (which goes from 0-1023
+  float angle = sensorValue * (90.0 / 324.0);
+  //print 
+  if (angle < 90) 
+  {
+    angle = 90 - angle;
+  }
+  if (angle > 90)
+  {
+    angle = angle / 2;
+  }
+  Serial.println(angle); //print out the value you read
+
+  delay(10); //delay in between reads for stability
+  
 }
+
+
 
 void brake_pedal(){
   // pin: allPins[9]
